@@ -65,10 +65,8 @@ class TagManager
   end
 
   def normalize_domain(domain)
-    return if domain.nil?
-
     uri = Addressable::URI.new
-    uri.host = domain.gsub(/[\/]/, '')
+    uri.host = domain
     uri.normalize.host
   end
 

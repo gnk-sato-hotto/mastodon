@@ -1,6 +1,27 @@
 # frozen_string_literal: true
 
 SimpleNavigation::Configuration.run do |navigation|
+  root_url = "http://www.seiyu-mstdn.club"
+  settings_profile_url = "/settings/profile"
+  settings_preferences_url = "/settings/preferences"
+  settings_registration_url = "/settings/registration"
+  settings_two_factor_authentication_url = "/settings/two_factor_authentication"
+  settings_import_url = "/settings/import"
+  settings_export_url = "/settings/export"
+  oauth_authorized_applications_url = "/settings/oauth_authorized_applications"
+  settings_follower_domains_url = "/settings/follower_domains"
+
+  admin_reports_url = "/admin/reports"
+  admin_accounts_url = "/admin/accounts"
+  admin_instances_url = "/admin/instances"
+  admin_pubsubhubbub_index_url = "/admin/pubsubhubbub_index"
+  admin_domain_blocks_url = "/admin/domain_blocks"
+  sidekiq_url = "/sidekiq"
+  pghero_url = "/pghero"
+
+  admin_settings_url = "/admin/settings"
+  destroy_user_session_url = "/auth/sign_out"
+
   navigation.items do |primary|
     primary.item :web, safe_join([fa_icon('chevron-left fw'), t('settings.back')]), root_url
 
@@ -23,7 +44,7 @@ SimpleNavigation::Configuration.run do |navigation|
       admin.item :domain_blocks, safe_join([fa_icon('lock fw'), t('admin.domain_blocks.title')]), admin_domain_blocks_url, highlights_on: %r{/admin/domain_blocks}
       admin.item :sidekiq, safe_join([fa_icon('diamond fw'), 'Sidekiq']), sidekiq_url, link_html: { target: 'sidekiq' }
       admin.item :pghero, safe_join([fa_icon('database fw'), 'PgHero']), pghero_url, link_html: { target: 'pghero' }
-      admin.item :settings, safe_join([fa_icon('cogs fw'), t('admin.settings.title')]), edit_admin_settings_url
+      admin.item :settings, safe_join([fa_icon('cogs fw'), t('admin.settings.title')]), admin_settings_url
     end
 
     primary.item :logout, safe_join([fa_icon('sign-out fw'), t('auth.logout')]), destroy_user_session_url, link_html: { 'data-method' => 'delete' }

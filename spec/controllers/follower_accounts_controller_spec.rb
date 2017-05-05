@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe FollowerAccountsController do
   render_views
-
   let(:alice) { Fabricate(:account, username: 'alice') }
 
   describe 'GET #index' do

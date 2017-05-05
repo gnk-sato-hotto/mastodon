@@ -64,11 +64,11 @@ fa:
       confirmations:
         revoke: Are you sure?
       index:
-        application: برنامه
-        created_at: مجازشده از
+        application: Application
+        created_at: Authorized
         date_format: "%Y-%m-%d %H:%M:%S"
-        scopes: اجازه‌ها
-        title: برنامه‌های مجاز
+        scopes: Scopes
+        title: Your authorized applications
     errors:
       messages:
         access_denied: The resource owner or authorization server denied the request.

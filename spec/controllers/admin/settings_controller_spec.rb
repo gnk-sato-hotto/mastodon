@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe Admin::SettingsController, type: :controller do
@@ -10,56 +8,44 @@ RSpec.describe Admin::SettingsController, type: :controller do
       sign_in Fabricate(:user, admin: true), scope: :user
     end
 
-    describe 'GET #edit' do
+    describe 'GET #index' do
       it 'returns http success' do
-        get :edit
+        get :index
 
         expect(response).to have_http_status(:success)
       end
     end
 
     describe 'PUT #update' do
+
       describe 'for a record that doesnt exist' do
-        around do |example|
-          before = Setting.site_extended_description
-          Setting.site_extended_description = nil
-          example.run
-          Setting.site_extended_description = before
+        after do
           Setting.new_setting_key = nil
         end
 
-        it 'cannot create a setting value for a non-admin key' do
-          expect(Setting.new_setting_key).to be_blank
-
-          patch :update, params: { new_setting_key: 'New key value' }
-
-          expect(response).to redirect_to(edit_admin_settings_path)
+        it 'creates a settings value that didnt exist before' do
           expect(Setting.new_setting_key).to be_nil
-        end
 
-        it 'creates a settings value that didnt exist before for eligible key' do
-          expect(Setting.site_extended_description).to be_blank
+          patch :update, params: { id: 'new_setting_key', setting: { value: 'New key value' } }
 
-          patch :update, params: { site_extended_description: 'New key value' }
-
-          expect(response).to redirect_to(edit_admin_settings_path)
-          expect(Setting.site_extended_description).to eq 'New key value'
+          expect(response).to redirect_to(admin_settings_path)
+          expect(Setting.new_setting_key).to eq 'New key value'
         end
       end
 
       it 'updates a settings value' do
         Setting.site_title = 'Original'
-        patch :update, params: { site_title: 'New title' }
+        patch :update, params: { id: 'site_title', setting: { value: 'New title' } }
 
-        expect(response).to redirect_to(edit_admin_settings_path)
+        expect(response).to redirect_to(admin_settings_path)
         expect(Setting.site_title).to eq 'New title'
       end
 
       it 'typecasts open_registrations to boolean' do
         Setting.open_registrations = false
-        patch :update, params: { open_registrations: 'true' }
+        patch :update, params: { id: 'open_registrations', setting: { value: 'true' } }
 
-        expect(response).to redirect_to(edit_admin_settings_path)
+        expect(response).to redirect_to(admin_settings_path)
         expect(Setting.open_registrations).to eq true
       end
     end

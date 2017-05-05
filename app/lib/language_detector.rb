@@ -9,22 +9,10 @@ class LanguageDetector
   end
 
   def to_iso_s
-    detected_language_code || default_locale.to_sym
+    WhatLanguage.new(:all).language_iso(text_without_urls) || default_locale.to_sym
   end
 
   private
-
-  def detected_language_code
-    detected_language[:code].to_sym if detected_language_reliable?
-  end
-
-  def detected_language
-    @_detected_language ||= CLD.detect_language(text_without_urls)
-  end
-
-  def detected_language_reliable?
-    detected_language[:reliable]
-  end
 
   def text_without_urls
     text.dup.tap do |new_text|

@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe AuthorizeFollowsController do
-  render_views
-
   describe 'GET #show' do
     describe 'when signed out' do
       it 'redirects to sign in page' do
@@ -40,7 +38,7 @@ describe AuthorizeFollowsController do
       end
 
       it 'sets account from url' do
-        account = Account.new
+        account = double
         service = double
         allow(FetchRemoteAccountService).to receive(:new).and_return(service)
         allow(service).to receive(:call).with('http://example.com').and_return(account)
@@ -52,7 +50,7 @@ describe AuthorizeFollowsController do
       end
 
       it 'sets account from acct uri' do
-        account = Account.new
+        account = double
         service = double
         allow(FollowRemoteAccountService).to receive(:new).and_return(service)
         allow(service).to receive(:call).with('found@hostname').and_return(account)

@@ -28,7 +28,7 @@ class UpdateRemoteProfileService < BaseService
 
     account.save_with_optional_avatar!
 
-    Pubsubhubbub::SubscribeWorker.perform_async(account.id) if resubscribe && (account.hub_url != old_hub_url)
+    SubscribeService.new.call(account) if resubscribe && (account.hub_url != old_hub_url)
   end
 
   private

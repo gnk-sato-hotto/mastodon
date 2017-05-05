@@ -3,17 +3,11 @@ require 'rails_helper'
 
 describe LanguageDetector do
   describe 'to_iso_s' do
-    it 'detects english language for basic strings' do
-      strings = [
-        "Hello and welcome to mastodon",
-        "I'd rather not!",
-        "a lot of people just want to feel righteous all the time and that's all that matters",
-      ]
-      strings.each do |string|
-        result = described_class.new(string).to_iso_s
+    it 'detects english language' do
+      string = 'Hello and welcome to mastodon'
+      result = described_class.new(string).to_iso_s
 
-        expect(result).to eq(:en), string
-      end
+      expect(result).to eq :en
     end
 
     it 'detects spanish language' do
@@ -25,15 +19,15 @@ describe LanguageDetector do
 
     describe 'when language can\'t be detected' do
       it 'confirm language engine cant detect' do
-        result = CLD.detect_language('')
-        expect(result[:reliable]).to be false
+        result = WhatLanguage.new(:all).language_iso('')
+        expect(result).to be_nil
       end
 
       describe 'because of a URL' do
         it 'uses default locale when sent just a URL' do
           string = 'http://example.com/media/2kFTgOJLXhQf0g2nKB4'
-          cld_result = CLD.detect_language(string)[:code]
-          expect(cld_result).not_to eq :en
+          wl_result = WhatLanguage.new(:all).language_iso(string)
+          expect(wl_result).not_to eq :en
 
           result = described_class.new(string).to_iso_s
 

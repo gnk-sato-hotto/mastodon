@@ -51,7 +51,7 @@ id:
         authorize: Izinkan
         deny: Tolak
       error:
-        title: Ada yang error
+        title: Ada sebuah Error
       new:
         able_to: Mempunyai akses untuk
         prompt: Aplikasi %{client_name} meminta akses pada akun anda

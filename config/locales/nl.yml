@@ -41,6 +41,7 @@ nl:
     unfollow: Ontvolgen
   admin:
     settings:
+      click_to_edit: Klik om te bewerken
       contact_information:
         email: Vul een openbaar gebruikt e-mailadres in
         label: Contactgegevens
@@ -190,19 +191,16 @@ nl:
     over_character_limit: Limiet van %{max} tekens overschreden
     show_more: Toon meer
     visibilities:
-      private: Alleen volgers
-      private_long: Alleen aan volgers tonen
-      public: Openbaar
-      public_long: Aan iedereen tonen, ook op openbare tijdlijnen
-      unlisted: Minder openbaar
-      unlisted_long: Aan iedereen tonen, maar niet op openbare tijdlijnen
+      private: Privé – alleen aan volgers (en vermeldingen) tonen
+      public: Openbaar – op openbare tijdlijnen tonen
+      unlisted: Minder openbaar – niet op openbare tijdlijnen tonen
   stream_entries:
     click_to_show: Klik om te tonen
     reblogged: boostte
     sensitive_content: Gevoelige inhoud
   time:
     formats:
-      default: "%d %B %Y om %H:%M"
+      default: "%d %B %J om %U:%M"
   two_factor_authentication:
     description_html: Na het instellen van <strong>tweestapsverificatie</strong>, kun jij je alleen aanmelden als je jouw mobiele telefoon bij je hebt. Hiermee genereer je namelijk de in te voeren aanmeldcode.
     disable: Uitschakelen

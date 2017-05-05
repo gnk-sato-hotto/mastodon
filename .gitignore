@@ -22,7 +22,7 @@ public/assets
 .env
 .env.production
 node_modules/
-build/
+neo4j/
 
 # Ignore Vagrant files
 .vagrant/
@@ -43,5 +43,3 @@ redis
 # Ignore vim files
 *~
 *.swp
-/public/packs
-/node_modules

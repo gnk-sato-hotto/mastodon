@@ -77,9 +77,6 @@ Style/Lambda:
 Rails/HasAndBelongsToMany:
   Enabled: false
 
-Bundler/OrderedGems:
-  Enabled: false
-
 AllCops:
   TargetRubyVersion: 2.3
   Exclude:
@@ -91,4 +88,3 @@ AllCops:
   - 'Rakefile'
   - 'node_modules/**/*'
   - 'Vagrantfile'
-  - 'vendor/**/*'

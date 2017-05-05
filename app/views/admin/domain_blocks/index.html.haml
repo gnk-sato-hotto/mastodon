@@ -9,7 +9,16 @@
       %th= t('admin.domain_blocks.reject_media')
       %th
   %tbody
-    = render @domain_blocks
+    - @blocks.each do |block|
+      %tr
+        %td
+          %samp= block.domain
+        %td= t("admin.domain_blocks.severities.#{block.severity}")
+        %td
+          - if block.reject_media? || block.suspend?
+            %i.fa.fa-check
+        %td
+          = table_link_to 'undo', t('admin.domain_blocks.undo'), admin_domain_block_path(block)
 
-= paginate @domain_blocks
+= paginate @blocks
 = link_to t('admin.domain_blocks.add_new'), new_admin_domain_block_path, class: 'button'

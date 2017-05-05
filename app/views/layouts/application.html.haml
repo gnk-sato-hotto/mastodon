@@ -17,11 +17,9 @@
       - if content_for?(:page_title)
         = yield(:page_title)
         = ' - '
-      = title
+      = site_title
 
-    = stylesheet_pack_tag 'vendor', media: 'all'
-    = stylesheet_pack_tag 'application', media: 'all'
-    = javascript_pack_tag 'vendor', integrity: true, crossorigin: 'anonymous'
+    = stylesheet_link_tag stylesheet_for_layout, media: 'all'
     = csrf_meta_tags
 
     = yield :header_tags

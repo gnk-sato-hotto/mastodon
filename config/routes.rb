@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :pubsubhubbub, only: [:index]
     resources :domain_blocks, only: [:index, :new, :create, :show, :destroy]
-    resource :settings, only: [:edit, :update]
+    resources :settings, only: [:index, :update]
     resources :instances, only: [:index]
 
     resources :reports, only: [:index, :show, :update] do
@@ -88,10 +88,6 @@ Rails.application.routes.draw do
       resource :silence, only: [:create, :destroy]
       resource :suspension, only: [:create, :destroy]
       resource :confirmation, only: [:create]
-    end
-
-    resources :users, only: [] do
-      resource :two_factor_authentication, only: [:destroy]
     end
   end
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  #before_filter :basic
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -8,7 +10,6 @@ class ApplicationController < ActionController::Base
   force_ssl if: :https_enabled?
 
   include Localized
-  include UserTrackingConcern
 
   helper_method :current_account
   helper_method :single_user_mode?
@@ -18,6 +19,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, with: :unprocessable_entity
 
   before_action :store_current_location, except: :raise_not_found, unless: :devise_controller?
+  before_action :set_user_activity
   before_action :check_suspension, if: :user_signed_in?
 
   def raise_not_found
@@ -25,6 +27,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def basic
+    authenticate_or_request_with_http_basic do |user, pass|
+      user == 'hello' && pass == 'worldworld'
+    end
+  end
 
   def https_enabled?
     Rails.env.production? && ENV['LOCAL_HTTPS'] == 'true'
@@ -38,26 +45,48 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user&.admin?
   end
 
+  def set_user_activity
+    return unless !current_user.nil? && (current_user.current_sign_in_at.nil? || current_user.current_sign_in_at < 24.hours.ago)
+
+    # Mark user as signed-in today
+    current_user.update_tracked_fields(request)
+
+    # If the sign in is after a two week break, we need to regenerate their feed
+    RegenerationWorker.perform_async(current_user.account_id) if current_user.last_sign_in_at < 14.days.ago
+  end
+
   def check_suspension
     head 403 if current_user.account.suspended?
   end
 
   protected
 
-  def forbidden
-    respond_with_error(403)
-  end
-
   def not_found
-    respond_with_error(404)
+    respond_to do |format|
+      format.any  { head 404 }
+      format.html { respond_with_error(404) }
+    end
   end
 
   def gone
-    respond_with_error(410)
+    respond_to do |format|
+      format.any  { head 410 }
+      format.html { respond_with_error(410) }
+    end
+  end
+
+  def forbidden
+    respond_to do |format|
+      format.any  { head 403 }
+      format.html { render 'errors/403', layout: 'error', status: 403 }
+    end
   end
 
   def unprocessable_entity
-    respond_with_error(422)
+    respond_to do |format|
+      format.any  { head 422 }
+      format.html { respond_with_error(422) }
+    end
   end
 
   def single_user_mode?
@@ -93,12 +122,7 @@ class ApplicationController < ActionController::Base
   end
 
   def respond_with_error(code)
-    respond_to do |format|
-      format.any  { head code }
-      format.html do
-        set_locale
-        render "errors/#{code}", layout: 'error', status: code
-      end
-    end
+    set_locale
+    render "errors/#{code}", layout: 'error', status: code
   end
 end

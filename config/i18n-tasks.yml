@@ -54,4 +54,3 @@ ignore_unused:
   - 'simple_form.{error_notification,required}.:'
   - 'errors.messages.*'
   - 'activerecord.errors.models.doorkeeper/*'
-  - 'errors.429'

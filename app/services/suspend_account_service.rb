@@ -17,16 +17,12 @@ class SuspendAccountService < BaseService
       RemoveStatusService.new.call(status)
     end
 
-    [
-      @account.media_attachments,
-      @account.stream_entries,
-      @account.notifications,
-      @account.favourites,
-      @account.active_relationships,
-      @account.passive_relationships
-    ].each do |association|
-      destroy_all(association)
-    end
+    @account.media_attachments.destroy_all
+    @account.stream_entries.destroy_all
+    @account.notifications.destroy_all
+    @account.favourites.destroy_all
+    @account.active_relationships.destroy_all
+    @account.passive_relationships.destroy_all
   end
 
   def purge_profile
@@ -39,10 +35,6 @@ class SuspendAccountService < BaseService
   end
 
   def unsubscribe_push_subscribers
-    destroy_all(@account.subscriptions)
-  end
-
-  def destroy_all(association)
-    association.in_batches.destroy_all
+    @account.subscriptions.destroy_all
   end
 end

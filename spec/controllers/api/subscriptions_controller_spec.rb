@@ -45,8 +45,8 @@ RSpec.describe Api::SubscriptionsController, type: :controller do
       post :update, params: { id: account.id }
     end
 
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
+    it 'returns http created' do
+      expect(response).to have_http_status(:created)
     end
 
     it 'creates statuses for feed' do

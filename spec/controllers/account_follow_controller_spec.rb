@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe AccountFollowController do
   render_views
-
   let(:user) { Fabricate(:user) }
   let(:alice) { Fabricate(:account, username: 'alice') }
 
