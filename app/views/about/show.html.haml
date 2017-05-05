@@ -23,8 +23,9 @@
   %p= t('about.about_mastodon').html_safe
 
   .screenshot-with-signup
-    .mascot= image_tag 'fluffy-elephant-friend.png'
-    //.mascot= image_tag 'about.png'
+    //.mascot= image_tag 'fluffy-elephant-friend.png'
+    .mascot= image_tag 'seiyu.png'
+    //%img{:src => "assets/seiyu.png",:alt => "テスト"}/ 
 
     - if @instance_presenter.open_registrations
       = render 'registration'
@@ -41,8 +42,21 @@
           ·
           = link_to t('about.about_this'), about_more_path
 
-  %h3= t('about.features_headline')
+  .information-board
+    .section
+      %span= t 'about.user_count_before'
+      %strong= number_with_delimiter @instance_presenter.user_count
+      %span= t 'about.user_count_after'
+    .section
+      %span= t 'about.status_count_before'
+      %strong= number_with_delimiter @instance_presenter.status_count
+      %span= t 'about.status_count_after'
+    .section
+      %span= t 'about.domain_count_before'
+      %strong= number_with_delimiter @instance_presenter.domain_count
+      %span= t 'about.domain_count_after'
 
+  %h3= t('about.features_headline')
   .features-list
     .features-list__column
       %ul.fa-ul
