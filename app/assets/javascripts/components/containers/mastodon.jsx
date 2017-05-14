@@ -29,6 +29,7 @@ import CommunityTimeline from '../features/community_timeline';
 import AccountTimeline from '../features/account_timeline';
 import HomeTimeline from '../features/home_timeline';
 import Compose from '../features/compose';
+import Vaevents from '../features/vaevents';
 import Followers from '../features/followers';
 import Following from '../features/following';
 import Reblogs from '../features/reblogs';
@@ -202,7 +203,11 @@ class Container extends React.PureComponent {
     // Hide some components rather than unmounting them to allow to show again
     // quickly and keep the view state such as the scrolled offset.
     const persistentsView = this.state.renderedPersistents.map((persistent) =>
-      <div aria-hidden={persistent.hidden} key={persistent.pathname} className='mastodon-column-container' style={persistent.hidden ? hiddenColumnContainerStyle : null}>
+      <div
+       aria-hidden={persistent.hidden}
+       key={persistent.pathname}
+       className='mastodon-column-container'
+       style={persistent.hidden ? hiddenColumnContainerStyle : null}>
         <persistent.component shouldUpdateScroll={persistent.hidden ? Function.prototype : getTopWhenReplacing} />
       </div>
     );
@@ -300,6 +305,7 @@ class Mastodon extends React.Component {
               <Route path='blocks' component={Blocks} />
               <Route path='mutes' component={Mutes} />
               <Route path='report' component={Report} />
+              <Route path='vaevents' component={Vaevents} />
 
               <Route path='*' component={GenericNotFound} />
             </Route>
