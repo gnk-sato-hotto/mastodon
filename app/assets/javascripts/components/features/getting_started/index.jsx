@@ -19,7 +19,8 @@ const messages = defineMessages({
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favourites' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
-  info: { id: 'navigation_bar.info', defaultMessage: 'Extended information' }
+  info: { id: 'navigation_bar.info', defaultMessage: 'Extended information' },
+  vaevents: {id: 'navigation_bar.vaevents', defaultMessage: '声優イベント情報'},
 });
 
 const mapStateToProps = state => ({
@@ -40,6 +41,12 @@ const GettingStarted = ({ intl, me }) => {
         <ColumnLink icon='users' hideOnMobile={true} text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />
         <ColumnLink icon='globe' hideOnMobile={true} text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
         <ColumnLink icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />
+        <ColumnLink
+         icon='book'
+         text={intl.formatMessage(messages.vaevents)}
+         to='/vaevents'
+         style={{backgroundColor: '#EC407A'}}
+         />
         {followRequests}
         <ColumnLink icon='volume-off' text={intl.formatMessage(messages.mutes)} to='/mutes' />
         <ColumnLink icon='ban' text={intl.formatMessage(messages.blocks)} to='/blocks' />
