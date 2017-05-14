@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 SimpleNavigation::Configuration.run do |navigation|
-  root_url = "http://www.seiyu-mstdn.club"
+  root_url = "http://ec2-35-163-28-179.us-west-2.compute.amazonaws.com"
   settings_profile_url = "/settings/profile"
   settings_preferences_url = "/settings/preferences"
   settings_registration_url = "/settings/registration"
