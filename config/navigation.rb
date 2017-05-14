@@ -14,7 +14,7 @@ SimpleNavigation::Configuration.run do |navigation|
   admin_reports_url = "/admin/reports"
   admin_accounts_url = "/admin/accounts"
   admin_instances_url = "/admin/instances"
-  admin_pubsubhubbub_index_url = "/admin/pubsubhubbub_index"
+  admin_pubsubhubbub_index_url = "/admin/pubsubhubbub"
   admin_domain_blocks_url = "/admin/domain_blocks"
   sidekiq_url = "/sidekiq"
   pghero_url = "/pghero"
