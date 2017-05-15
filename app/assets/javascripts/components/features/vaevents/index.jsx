@@ -142,9 +142,16 @@ class Vaevents extends React.PureComponent {
 
     const events = this.state.events || [];
     return events.length == 0 ? <p style={styles.noEvent}>イベントがありません</p>
-    : events.map((event) => {
-      return <EventForm event={event} key={event.getId()}/>
-    })
+    : (
+      <div>
+        <p style={{margin: 10}}>全 {events.length} 件</p>
+        {
+          events.map((event) => {
+            return <EventForm event={event} key={event.getId()}/>
+          })
+        }
+      </div>
+    )
   }
 
   render () {
@@ -190,7 +197,7 @@ class Vaevents extends React.PureComponent {
               </select>
             </div>
 
-            <div style={{margin: '10px 0'}}>
+            <div style={{margin: '20px 0'}}>
               {this.getEvents()}
             </div>
           </div>
