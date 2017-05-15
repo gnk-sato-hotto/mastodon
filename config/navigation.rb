@@ -8,7 +8,7 @@ SimpleNavigation::Configuration.run do |navigation|
   settings_two_factor_authentication_url = "/settings/two_factor_authentication"
   settings_import_url = "/settings/import"
   settings_export_url = "/settings/export"
-  oauth_authorized_applications_url = "/settings/oauth_authorized_applications"
+  oauth_authorized_applications_url = "/oauth/authorized_applications"
   settings_follower_domains_url = "/settings/follower_domains"
 
   admin_reports_url = "/admin/reports"
