@@ -21,6 +21,7 @@ const messages = defineMessages({
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   info: { id: 'navigation_bar.info', defaultMessage: 'Extended information' },
   vaevents: {id: 'navigation_bar.vaevents', defaultMessage: '声優イベント情報'},
+  event_images: {id: 'navigation_bar.event_images', defaultMessage: '最新の声優イベント画像'},
 });
 
 const mapStateToProps = state => ({
@@ -42,9 +43,14 @@ const GettingStarted = ({ intl, me }) => {
         <ColumnLink icon='globe' hideOnMobile={true} text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
         <ColumnLink icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />
         <ColumnLink
-         icon='book'
+         icon='id-badge'
          text={intl.formatMessage(messages.vaevents)}
          to='/vaevents'
+         />
+        <ColumnLink
+         icon='image'
+         text={intl.formatMessage(messages.event_images)}
+         to='/event_images'
          style={{backgroundColor: '#EC407A'}}
          />
         {followRequests}

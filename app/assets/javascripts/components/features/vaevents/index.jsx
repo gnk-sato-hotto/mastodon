@@ -89,6 +89,8 @@ class Vaevents extends React.PureComponent {
         return moment().add(1, 'month').format(format);
       case 'month_after_next':
         return moment().add(2, 'month').format(format);
+      case 'after_3_month':
+        return moment().add(3, 'month').format(format);
       default:
         return moment().format(format);
     }
@@ -154,16 +156,27 @@ class Vaevents extends React.PureComponent {
     )
   }
 
+  getMonthLabels() {
+    return [
+      '今月',
+      moment().add(1, 'month').format("M") + " 月",
+      moment().add(2, 'month').format("M") + " 月",
+      moment().add(3, 'month').format("M") + " 月",
+    ]; 
+  }
+
   render () {
     const {intl} = this.props;
+    const monthLabels = this.getMonthLabels();
     const switchItems = [
-      {value: 'this_month', label: '今月'},
-      {value: 'next_month', label: '来月'},
-      {value: 'month_after_next', label: '再来月'},
+      {value: 'this_month', label: monthLabels[0]},
+      {value: 'next_month', label: monthLabels[1]},
+      {value: 'month_after_next', label: monthLabels[2]},
+      {value: 'after_3_month', label: monthLabels[3]},
     ];
 
     return (
-      <Column icon='book' heading={intl.formatMessage(messages.heading)}>
+      <Column icon='id-badge' heading={intl.formatMessage(messages.heading)}>
         <ColumnBackButtonSlim />
         <ScrollContainer scrollKey='vaevents'>
           <div style={styles.style} className="scrollable">
