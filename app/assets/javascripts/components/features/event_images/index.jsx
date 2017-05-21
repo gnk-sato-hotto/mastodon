@@ -60,7 +60,6 @@ class EventImages extends React.PureComponent {
 
   fetchTweets(month, pref) {
     const success = (tweets) => {
-      console.log("@@@", tweets)
       this.setState({
         tweets,
         fetchRequired: false,
