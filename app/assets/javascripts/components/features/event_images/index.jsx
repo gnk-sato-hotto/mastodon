@@ -13,7 +13,7 @@ import EventImageForm  from '../../components/event_image_form';
 import moment from 'moment';
 
 const messages = defineMessages({
-  heading: { id: 'column.event_images', defaultMessage: '最新の声優イベント情報' }
+  heading: { id: 'column.event_images', defaultMessage: '最新の声優イベント画像' }
 });
 
 const mapStateToProps = state => ({
