@@ -31,6 +31,7 @@ import HomeTimeline from '../features/home_timeline';
 import Compose from '../features/compose';
 import Vaevents from '../features/vaevents';
 import EventImages from '../features/event_images';
+import Performers from '../features/performers';
 import Followers from '../features/followers';
 import Following from '../features/following';
 import Reblogs from '../features/reblogs';
@@ -308,6 +309,7 @@ class Mastodon extends React.Component {
               <Route path='report' component={Report} />
               <Route path='vaevents' component={Vaevents} />
               <Route path='event_images' component={EventImages} />
+              <Route path='performers' component={Performers} />
 
               <Route path='*' component={GenericNotFound} />
             </Route>

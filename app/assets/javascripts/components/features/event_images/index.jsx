@@ -13,7 +13,7 @@ import EventImageForm  from '../../components/event_image_form';
 import moment from 'moment';
 
 const messages = defineMessages({
-  heading: { id: 'column.event_images', defaultMessage: '最新の声優イベント画像' }
+  heading: { id: 'column.event_images', defaultMessage: '新着イベント画像' }
 });
 
 const mapStateToProps = state => ({
@@ -68,7 +68,7 @@ class EventImages extends React.PureComponent {
     const error = (err) => {
       console.log(err);
     }
-    Tweet.fetchAll({}, success, error);
+    Tweet.fetchAll({s: "tweet_created_at,desc"}, success, error);
   }
 
   getPrefs() {
@@ -94,7 +94,7 @@ class EventImages extends React.PureComponent {
     }
 
     const tweets = this.state.tweets || [];
-    return tweets.length == 0 ? <p style={styles.info}>最新のイベント画像がありません</p>
+    return tweets.length == 0 ? <p style={styles.info}>新着イベント画像がありません</p>
     : (
       <div>
         <p style={{margin: 10}}>全 {tweets.length} 件</p>
