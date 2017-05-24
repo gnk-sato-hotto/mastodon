@@ -21,7 +21,8 @@ const messages = defineMessages({
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   info: { id: 'navigation_bar.info', defaultMessage: 'Extended information' },
   vaevents: {id: 'navigation_bar.vaevents', defaultMessage: '声優イベント情報'},
-  event_images: {id: 'navigation_bar.event_images', defaultMessage: '最新の声優イベント画像'},
+  event_images: {id: 'navigation_bar.event_images', defaultMessage: '新着イベント画像'},
+  performers: {id: 'navigation_bar.performers', defaultMessage: '声優の出演アニメ情報'},
 });
 
 const mapStateToProps = state => ({
@@ -37,7 +38,7 @@ const GettingStarted = ({ intl, me }) => {
 
   return (
     <Column icon='asterisk' heading={intl.formatMessage(messages.heading)} hideHeadingOnMobile={true}>
-      <div className='getting-started__wrapper'>
+      <div className='getting-started__wrapper' style={{overflow: 'scroll'}}>
         <ColumnSubheading text={intl.formatMessage(messages.navigation_subheading)}/>
         <ColumnLink icon='users' hideOnMobile={true} text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />
         <ColumnLink icon='globe' hideOnMobile={true} text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
@@ -51,7 +52,13 @@ const GettingStarted = ({ intl, me }) => {
          icon='image'
          text={intl.formatMessage(messages.event_images)}
          to='/event_images'
-         style={{backgroundColor: '#EC407A'}}
+         style={{backgroundColor: '#009688'}}
+         />
+        <ColumnLink
+         icon='plane'
+         text={intl.formatMessage(messages.performers)}
+         to='/performers'
+         style={{backgroundColor: '#009688'}}
          />
         {followRequests}
         <ColumnLink icon='volume-off' text={intl.formatMessage(messages.mutes)} to='/mutes' />
@@ -62,11 +69,15 @@ const GettingStarted = ({ intl, me }) => {
         <ColumnLink icon='sign-out' text={intl.formatMessage(messages.sign_out)} href='/auth/sign_out' method='delete' />
       </div>
 
+      {
+        /*
       <div className='scrollable optionally-scrollable' style={{ display: 'flex', flexDirection: 'column' }}>
         <div className='static-content getting-started'>
           <p><FormattedMessage id='getting_started.open_source_notice' defaultMessage='Mastodon is open source software. You can contribute or report issues on GitHub at {github}. {apps}.' values={{ github: <a href="https://github.com/tootsuite/mastodon" target="_blank">tootsuite/mastodon</a>, apps: <a href="https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/Apps.md" target="_blank"><FormattedMessage id='getting_started.apps' defaultMessage='Various apps are available' /></a> }} /></p>
         </div>
       </div>
+         */
+      }
     </Column>
   );
 };

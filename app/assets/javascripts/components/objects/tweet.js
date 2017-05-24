@@ -6,7 +6,7 @@ export default class Tweet {
 
   static fetchAll(params, success, error) {
     const url = "/sm_api/seiyu-mstdn-api/tweets";
-    axios.get(url, params)
+    axios.get(url, {params})
     .then(function (response) {
       const data = response.data.data;
       if(!data) {

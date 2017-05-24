@@ -4,7 +4,7 @@ const styles = {
   },
 
   item: {
-    minWidth:  60,
+    minWidth:  50,
     minHeight: 24,
     textAlign: 'center',
     paddingTop: 6,

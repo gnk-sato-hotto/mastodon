@@ -12,6 +12,7 @@ import Switch from '../../components/switch';
 import EventForm from '../../components/event_form';
 import VaEvent from '../../objects/vaevent';
 import moment from 'moment';
+import _ from 'lodash'
 
 const messages = defineMessages({
   heading: { id: 'column.vaevents', defaultMessage: '声優イベント情報' }
@@ -42,7 +43,7 @@ class Vaevents extends React.PureComponent {
   }
 
   componentWillMount () {
-    const month = 'this_month';
+    const month = 'today';
     const pref  = this.prefs[0].value;
     this.fetchEvents(month, pref);
 
@@ -67,6 +68,12 @@ class Vaevents extends React.PureComponent {
   fetchEvents(month, pref) {
     const yearMonth = this.getYearMonth(month);
     const success = (events) => {
+      if(month == 'today') {
+        const today = moment().format("YYYY-MM-DD")
+        events = _.filter(events, (event) => {
+          return _.includes(event.getDatetime(), today);
+        })
+      }
       this.setState({
         month,
         pref,
@@ -83,6 +90,8 @@ class Vaevents extends React.PureComponent {
   getYearMonth(str) {
     const format = "YYYYMM";
     switch (str) {
+      case 'today':
+        return moment().format(format);
       case 'this_month':
         return moment().format(format);
       case 'next_month':
@@ -169,6 +178,7 @@ class Vaevents extends React.PureComponent {
     const {intl} = this.props;
     const monthLabels = this.getMonthLabels();
     const switchItems = [
+      {value: 'today',      label: '今日'},
       {value: 'this_month', label: monthLabels[0]},
       {value: 'next_month', label: monthLabels[1]},
       {value: 'month_after_next', label: monthLabels[2]},
