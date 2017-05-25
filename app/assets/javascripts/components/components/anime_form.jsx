@@ -1,10 +1,10 @@
 const styles = {
   style: {
-    padding: 10,
-    backgroundColor: '#444B5D',
-    borderRadius: '4px',
+    padding:    10,
     minHeight: '100px',
     marginBottom: 20,
+    borderRadius: '4px',
+    backgroundColor: '#444B5D',
   },
   date: {
     color: "#9BAEC8",
@@ -30,12 +30,12 @@ export default class AnimeForm extends React.Component {
       return <div />
     }
     const style = Object.assign({}, styles.style, this.props.style);
-    const color = this.props.anime.isCurrent() ? '#EF5350' : '#E6EE9C';
+    const color = this.props.anime.isCurrent() ? "#E6EE9C" : '#FFAB40';
     return (
       <div style={style}>
         <div style={styles.title}>
           <span style={{marginRight: 10, color,}}>
-            {this.props.anime.isCurrent() ? '今期' : '来期'}
+            {this.props.anime.isCurrent() ? '(今)' : '(来)'}
           </span>
           <a href={this.props.anime.getUrl()} target="_blank" style={styles.url}>
             {this.props.anime.getTitle()}
