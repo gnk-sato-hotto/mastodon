@@ -32,7 +32,26 @@ const styles = {
     fontSize:  '1.2em',
     textAlign: 'center',
     marginTop: 30,
-  }
+  },
+  popular: {
+    padding: 10,
+    backgroundColor: '#444B5D',
+    borderRadius: '4px',
+    minHeight: '100px',
+    marginBottom: 20,
+  },
+  popularName: {
+    float:  'left',
+    cursor: 'pointer',
+    minWidth:    90,
+    marginRight:  4,
+    marginBottom: 2,
+  },
+  clearFilter: {
+    color: '#64B5F6',
+    cursor: 'pointer',
+    marginLeft: 10,
+  },
 };
 
 class Performers extends React.PureComponent {
@@ -68,15 +87,14 @@ class Performers extends React.PureComponent {
   onChangeQuote(value) {
     this.setState({
       quote: value,
+      filterName:    false,
       fetchRequired: false,
     })
   }
 
-  getPerformers() {
-    if(this.state.fetchRequired) {
-      return (
-        <p style={styles.noEvent}>データを取得中です</p>
-      );
+  getAnimes(nameFilter=false) {
+    if(!this.state.animes) {
+      return [];
     }
 
     let animes = [];
@@ -95,6 +113,22 @@ class Performers extends React.PureComponent {
         animes = this.state.animes.next;
         break;
     }
+
+    if(nameFilter && this.state.filterName) {
+      return _.filter(animes, (anime) => {
+        return _.includes(anime.getPerformers(), this.state.filterName);
+      });
+    }
+    return animes;
+  }
+
+  getPerformers() {
+    if(this.state.fetchRequired) {
+      return (
+        <p style={styles.noEvent}>データを取得中です</p>
+      );
+    }
+    const animes = this.getAnimes(true);
     return animes.length == 0 ? <p style={styles.noEvent}>声優の出演情報がありません</p>
     : (
       <div>
@@ -106,6 +140,66 @@ class Performers extends React.PureComponent {
         }
       </div>
     )
+  }
+
+  countPerformers(animes) {
+    const performersCounter = {};
+    _.each(animes, (anime) => {
+      if(anime.getPerformers()) {
+        const ps = anime.getPerformers().split(",");
+        _.each(ps, (performer) => {
+          if(performer.length > 0) {
+            performersCounter[performer] = performersCounter[performer] || 0;
+            performersCounter[performer] += 1;
+          }
+        }) 
+      }
+    })
+    return _.toPairs(performersCounter);
+  }
+
+  filterName(name) {
+    this.setState({
+      filterName: name
+    });
+  }
+
+  getPopularPerformers() {
+    const animes = this.getAnimes();
+    if(_.isEmpty(animes)) {
+      return;
+    }
+    const counter = this.countPerformers(animes);
+    const sortedCounter = _.sortBy(counter, (count) => {
+      return _.last(count);
+    }).reverse();
+    const criterion = this.state.quote == 'all' ? 2 : 1;
+    const multiPerformers = _.filter(sortedCounter, (count) => {
+      return _.last(count) > criterion;
+    });
+
+    return (
+      <div style={styles.popular}>
+        <h6 style={{marginBottom: 4}}>☆ 多数出演
+          <span style={styles.clearFilter} onClick={this.filterName.bind(this, false)}>
+            {this.state.filterName ? '解除' : ''}
+          </span>
+        </h6>
+        {
+          _.map(multiPerformers, (performer) => {
+            return (
+              <div 
+               style={styles.popularName}
+               onClick={this.filterName.bind(this, _.head(performer))}
+               >
+                {_.head(performer)} ({_.last(performer)})
+              </div>
+            );
+          })
+        }
+        <div style={{clear: 'both'}} />
+      </div>
+    );
   }
 
   render () {
@@ -126,6 +220,9 @@ class Performers extends React.PureComponent {
              selectedValue={this.state.quote}
              onClickItem={this.onChangeQuote.bind(this)}
             />
+            <div style={{margin: '20px 0'}}>
+              {this.getPopularPerformers()}
+            </div>
 
             <div style={{margin: '20px 0'}}>
               {this.getPerformers()}
